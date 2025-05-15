@@ -37,6 +37,9 @@ jobs:
     mssql: mssql
   
   steps:
+  - script: |
+            apt-get update && apt-get install -y mssql-tools
+
   - task: Cache@2
     displayName: 'Restore cache for NuGet'
     inputs:
