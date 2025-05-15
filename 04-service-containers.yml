@@ -15,7 +15,6 @@ resources:
 
 jobs: 
 - job: Build
-  container: mcr.microsoft.com/dotnet/sdk:9.0
   pool:
     vmImage: ubuntu-24.04
   variables:
@@ -37,6 +36,18 @@ jobs:
     mssql: mssql
   
   steps:
+  - script: |
+      # Install dependencies for sqlcmd
+      curl https://packages.microsoft.com/keys/microsoft.asc | sudo tee /etc/apt/trusted.gpg.d/microsoft.asc
+      sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/22.04/prod.list)"
+      sudo apt-get install sqlcmd
+      # Add SQLCMD to PATH for the current session
+      echo "export PATH=\$PATH:/opt/mssql-tools/bin" >> ~/.bashrc
+      source ~/.bashrc
+      # Verify installation
+      sqlcmd -?
+    displayName: 'Install and verify sqlcmd on Ubuntu'
+
   - task: PowerShell@2
     inputs:
       targetType: 'inline'
@@ -87,6 +98,14 @@ jobs:
       command: 'build'
       projects: '**/*.csproj'
       arguments: '--no-restore --configuration Release'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'custom'
+      custom: 'tool'
+      arguments: 'restore'
+      workingDirectory: '$(Build.SourcesDirectory)/TodoItems.Api'
+    displayName: 'Restore dotnet tools'
 
   - task: DotNetCoreCLI@2
     inputs:
