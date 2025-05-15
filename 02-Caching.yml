@@ -15,16 +15,8 @@ jobs:
   - name: NUGET_PACKAGES
     value: '$(Pipeline.Workspace)/.nuget/packages/'
     readonly: true
-  - name: DOTNET_VERSION 
-    value: 9
-    readonly: true
-        
+       
   steps:
-
-  - task: PowerShell@2
-    inputs:
-      targetType: 'inline'
-      script: |
   - task: PowerShell@2
     inputs:
       targetType: 'inline'
@@ -42,18 +34,21 @@ jobs:
               
               # Output the latest information about .NET 9
               Write-Output "Latest .NET 9 SDK: $latestNet9Sdk"
-      
+              Write-Host "##vso[task.setvariable variable=DOTNET_VERSION;]$latestNet9Sdk"
+
+  - task: Cache@2
+    displayName: 'Restore cache for Dotnet'
+    inputs:
+      key: 'nuget | "$(Agent.OS)" | $(DOTNET_VERSION)'
+      path: '$(Agent.ToolsDirectory)/dotnet'
+
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
       version: '${{variables.DOTNET_VERSION}}.x'
       includePreviewVersions: false
 
-  - task: Cache@2
-    displayName: 'Restore cache for Dotnet'
-    inputs:
-      key: 'nuget | "$(Agent.OS)"'
-      path: '$(Agent.ToolsDirectory)/dotnet'
+
   
   - task: Cache@2
     displayName: 'Restore cache for NuGet'
