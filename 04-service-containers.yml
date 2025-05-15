@@ -124,3 +124,12 @@ jobs:
     workingDirectory: '$(Build.ArtifactStagingDirectory)/SQL'
     displayName: 'Create database and tables for unit tests'
     timeoutInMinutes: 1
+
+  - task: DotNetCoreCLI@2
+    displayName: Dotnet test '**/*Tests.csproj'
+    inputs:
+      command: 'test'
+      projects: '**/*Tests.csproj'
+      arguments: '--no-build --nologo --configuration ${{parameters.buildConfiguration}}'
+    env:
+      integrationtests_ConnectionStrings__TodoDb: 'Server=127.0.0.1,1433;Database=${{parameters.testDatabasename}};User Id=SA;Password=$(SA_PASSWORD);TrustServerCertificate=true;'
