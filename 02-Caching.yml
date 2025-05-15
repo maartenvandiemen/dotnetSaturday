@@ -33,8 +33,8 @@ jobs:
       $latestNet9 = $dotNet9 | Select-Object -ExpandProperty "latest-supported-release"
       
       # Output the latest version of .NET 9
-
-Write-Output "Latest .NET 9 version: $latestNet9"
+      Write-Output "Latest .NET 9 version: $latestNet9"
+      
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
