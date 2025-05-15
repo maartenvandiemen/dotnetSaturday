@@ -18,11 +18,32 @@ jobs:
     readonly: true
         
   steps:
+
+  - script: |
+      # URL to the .NET release metadata
+      $releasesUrl = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json"
+      
+      # Fetch and parse the JSON data
+      $releasesData = Invoke-RestMethod -Uri $releasesUrl -UseBasicParsing
+      
+      # Filter for .NET 9 releases and get the latest version
+      $dotNet9 = $releasesData.releases | Where-Object { $_."channel-version" -like "9*" }
+      $latestNet9 = $dotNet9 | Select-Object -ExpandProperty "latest-supported-release"
+      
+      # Output the latest version of .NET 9
+
+Write-Output "Latest .NET 9 version: $latestNet9"
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
       version: '${{variables.DOTNET_VERSION}}.x'
       includePreviewVersions: false
+
+  - task: Cache@2
+    displayName: 'Restore cache for Dotnet'
+    inputs:
+      key: 'nuget | "$(Agent.OS)"
+      path: '$(Agent.ToolsDirectory)/dotnet'
   
   - task: Cache@2
     displayName: 'Restore cache for NuGet'
@@ -43,4 +64,4 @@ jobs:
     inputs:
       command: 'build'
       projects: '**/*.csproj'
-      arguments: '--no-restore --configuration ${{parameters.buildConfiguration}}'
+      arguments: '--no-restore --configuration Release'
