@@ -29,4 +29,4 @@ jobs:
       run: dotnet restore --locked-mode --nologo
     
     - name: Dotnet build
-      run: dotnet build --no-restore --configuration ${{inputs.buildConfiguration}}
+      run: dotnet build --no-restore --configuration Release
