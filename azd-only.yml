@@ -43,6 +43,7 @@ stages:
 
 - stage: deploy
   trigger: manual
+  isSkippable: false
   jobs:
   - job: deploy
     steps:
