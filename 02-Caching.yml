@@ -39,7 +39,7 @@ jobs:
   - task: Cache@2
     displayName: 'Restore cache for Dotnet'
     inputs:
-      key: 'nuget | "$(Agent.OS)" | $(DOTNET_VERSION)'
+      key: 'nuget | "$(Agent.OS)" | "$(DOTNET_VERSION)"'
       path: '$(Agent.ToolsDirectory)/dotnet'
 
   - task: UseDotNet@2
