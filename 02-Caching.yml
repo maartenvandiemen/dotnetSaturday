@@ -47,8 +47,6 @@ jobs:
       version: '$(DOTNET_VERSION)'
       includePreviewVersions: false
 
-
-  
   - task: Cache@2
     displayName: 'Restore cache for NuGet'
     inputs:
