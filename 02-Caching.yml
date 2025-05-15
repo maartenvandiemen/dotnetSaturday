@@ -30,8 +30,7 @@ jobs:
               # Filter for .NET 9 releases and get the latest version
               $dotNet9 = $releasesData."releases-index" | Where-Object { $_."channel-version" -like "9.0" }
               $latestNet9Sdk = $dotNet9."latest-sdk"
-              
-              
+
               # Output the latest information about .NET 9
               Write-Output "Latest .NET 9 SDK: $latestNet9Sdk"
               Write-Host "##vso[task.setvariable variable=DOTNET_VERSION;]$latestNet9Sdk"
@@ -45,7 +44,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
-      version: '${{variables.DOTNET_VERSION}}.x'
+      version: '$(DOTNET_VERSION)'
       includePreviewVersions: false
 
 
