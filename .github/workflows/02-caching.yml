@@ -41,7 +41,6 @@ jobs:
     - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ steps.set-dotnet-version.outputs.DOTNET_VERSION }}
-        dotnet-quality: 'ga'
         
     - name: Restore cache
       uses: actions/cache@v4
