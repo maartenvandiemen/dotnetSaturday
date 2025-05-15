@@ -37,8 +37,7 @@ jobs:
     mssql: mssql
   
   steps:
-  - script: |
-            apt-get update && apt-get install -y mssql-tools
+  - script: apt-get update && apt-get install -y mssql-tools
 
   - task: Cache@2
     displayName: 'Restore cache for NuGet'
@@ -60,3 +59,21 @@ jobs:
       command: 'build'
       projects: '**/*.csproj'
       arguments: '--no-restore --configuration Release'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'custom'
+      custom: 'ef'
+      arguments: 'migrations script --output $(Build.ArtifactStagingDirectory)/SQL/db.sql --idempotent --project TodoItems.Api.csproj --context TodoDb --no-build --verbose --configuration ${{parameters.buildConfiguration}}'
+      workingDirectory: '$(Build.SourcesDirectory)/TodoItems.Api'
+    displayName: 'Create idempotent SQL'
+    env:
+      #Pass environment variable dummy. So the migration script will not be created against the InMemory database.
+      ASPNETCORE_ENVIRONMENT: 'DUMMY'
+
+  - script: |
+        sqlcmd -S 127.0.0.1,1433 -U SA -P '$(SA_PASSWORD)' -Q 'CREATE DATABASE TodoItemsDB' -b
+        sqlcmd -S 127.0.0.1,1433 -U SA -P '$(SA_PASSWORD)' -i db.sql -d TodoItemsDB -b
+    workingDirectory: '$(Build.ArtifactStagingDirectory)/SQL'
+    displayName: 'Create database and tables for unit tests'
+    timeoutInMinutes: 1
