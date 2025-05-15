@@ -130,6 +130,6 @@ jobs:
     inputs:
       command: 'test'
       projects: '**/*Tests.csproj'
-      arguments: '--no-build --nologo --configuration ${{parameters.buildConfiguration}}'
+      arguments: '--no-build --nologo --configuration Release'
     env:
-      integrationtests_ConnectionStrings__TodoDb: 'Server=127.0.0.1,1433;Database=${{parameters.testDatabasename}};User Id=SA;Password=$(SA_PASSWORD);TrustServerCertificate=true;'
+      integrationtests_ConnectionStrings__TodoDb: 'Server=127.0.0.1,1433;Database=TodoItemsDB;User Id=SA;Password=$(SA_PASSWORD);TrustServerCertificate=true;'
