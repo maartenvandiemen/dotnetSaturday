@@ -64,7 +64,7 @@ jobs:
     inputs:
       command: 'custom'
       custom: 'ef'
-      arguments: 'migrations script --output $(Build.ArtifactStagingDirectory)/SQL/db.sql --idempotent --project TodoItems.Api.csproj --context TodoDb --no-build --verbose --configuration ${{parameters.buildConfiguration}}'
+      arguments: 'migrations script --output $(Build.ArtifactStagingDirectory)/SQL/db.sql --idempotent --project TodoItems.Api.csproj --context TodoDb --no-build --verbose --configuration Release'
       workingDirectory: '$(Build.SourcesDirectory)/TodoItems.Api'
     displayName: 'Create idempotent SQL'
     env:
