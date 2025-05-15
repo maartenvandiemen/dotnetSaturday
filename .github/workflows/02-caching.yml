@@ -15,6 +15,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Retrieve version
+      id: set-dotnet-version
       run: |
             # URL to the .NET release metadata
             $releasesUrl = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json"
@@ -35,11 +36,11 @@ jobs:
       uses: actions/cache@v4
       with:
         path: ${{runner.tool_cache}}/dotnet
-        key: ${{runner.os}}-${{env.DOTNET_VERSION}}
+        key: ${{runner.os}}-${{ steps.set-dotnet-version.outputs.DOTNET_VERSION }}
 
     - uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{env.DOTNET_VERSION}}
+        dotnet-version: ${{ steps.set-dotnet-version.outputs.DOTNET_VERSION }}
         dotnet-quality: 'ga'
         cache: true
 
