@@ -42,7 +42,12 @@ jobs:
       with:
         dotnet-version: ${{ steps.set-dotnet-version.outputs.DOTNET_VERSION }}
         dotnet-quality: 'ga'
-        cache: true
+        
+    - name: Restore cache
+      uses: actions/cache@v4
+      with:
+        path: ${{env.NUGET_PACKAGES}}
+        key: ${{runner.os}}-build-${{ hashFiles('**/packages.lock.json', '!**/bin/**', '!**/obj/**') }}        
 
     - name: Dotnet restore
       run: dotnet restore --locked-mode --nologo
