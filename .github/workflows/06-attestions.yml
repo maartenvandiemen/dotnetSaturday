@@ -1,4 +1,4 @@
-name: 05-Summary
+name: 06-attestations
 on: 
   workflow_dispatch:
 
