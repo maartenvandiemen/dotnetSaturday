@@ -88,7 +88,7 @@ jobs:
       modifyOutputPath: false
       zipAfterPublish: true
       
-  - script: ls -l /home/vsts/work/1/a
+  - script: ls -l /home/vsts/work/1/a/todoItemsApi
     displayName: 'List contents of /home/vsts/work/1/a'
 
   - script: |
