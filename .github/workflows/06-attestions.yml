@@ -78,3 +78,21 @@ jobs:
         name: todoItemsApi
         path: '${{github.workspace}}/artifacts/TodoItems.Api/**'
         if-no-files-found: error
+
+  deploy:
+    runs-on: ubuntu-24.04
+    needs: [build]
+    permissions:
+      id-token: write
+      contents: read
+      attestations: read
+    steps:
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: todoItemsApi
+        path: ${{github.workspace}}/artifacts/api
+    - run: gh attestation verify ${{github.workspace}}/artifacts/api -R ${{ github.repository }}
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
