@@ -104,5 +104,19 @@ jobs:
       secureFile: 'cosign.key'
 
   - script: |
-       cosign sign-blob --key $(cosignPrivateKey.secureFilePath) $(Build.ArtifactStagingDirectory)/todoItemsApi.zip
+       cosign sign-blob --key $(cosignPrivateKey.secureFilePath) -y $(Build.ArtifactStagingDirectory)/todoItemsApi.zip | tail -n 1 > $(Build.ArtifactStagingDirectory)/todoItemsApi.zip.signature --annotation buildNumber="$(Build.BuildNumber)" --annotation signedOn="AZDO" --annotation repo="$(Build.Repository.Name)"
     displayName: 'Sign Artifact with Metadata'
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish pipeline artifact 'API'
+    inputs:
+      targetPath: '$(Build.ArtifactStagingDirectory)/todoItemsApi.zip'
+      artifact: 'API'
+      publishLocation: 'pipeline'
+
+  - task: PublishPipelineArtifact@1
+    displayName: Publish pipeline artifact 'API signature'
+    inputs:
+      targetPath: '$(Build.ArtifactStagingDirectory)/todoItemsApi.zip.signature'
+      artifact: 'API-signature'
+      publishLocation: 'pipeline'
