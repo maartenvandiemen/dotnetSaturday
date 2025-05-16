@@ -104,5 +104,5 @@ jobs:
       secureFile: 'cosign.key'
 
   - script: |
-       cosign sign-blob --key $(cosignPrivateKey.secureFilePath) artifact.txt
+       cosign sign-blob --key $(cosignPrivateKey.secureFilePath) $(Build.ArtifactStagingDirectory)/todoItemsApi.zip
     displayName: 'Sign Artifact with Metadata'
