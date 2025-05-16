@@ -47,7 +47,7 @@ jobs:
     displayName: Show file before attaching
 
   - script: |
-      echo "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Versions used;]dynamic-versions.md"
+      echo "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Versions used;]$(Build.SourcesDirectory)/dynamic-versions.md"
     displayName: Attach Markdown to Build Summary
 
   - task: Cache@2
