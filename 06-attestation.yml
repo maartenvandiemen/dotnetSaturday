@@ -103,6 +103,9 @@ jobs:
     inputs:
       secureFile: 'cosign.key'
 
+  - script: cosign sign-blob --key $(cosignPrivateKey.secureFilePath) --bundle $(Build.ArtifactStagingDirectory)/todoItemsApi/todoItemsApi.bundle -y $(Build.ArtifactStagingDirectory)/todoItemsApi/todoItemsApi.zip 
+    displayName: 'Sign Artifact with Metadata'
+
   - task: PublishPipelineArtifact@1
     displayName: Publish pipeline artifact 'API'
     inputs:
