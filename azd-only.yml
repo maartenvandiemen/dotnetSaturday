@@ -44,7 +44,7 @@ stages:
 - stage: deploy
   trigger: manual
   isSkippable: false
-   jobs:
+  jobs:
    - deployment: deploy
      environment: dev
      strategy:
