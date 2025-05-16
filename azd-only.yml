@@ -52,4 +52,7 @@ stages:
          deploy:
            steps:
            - download: none
-           - checkout: self
+           - task: DownloadSecureFile@1
+             name: cosignPrivateKey
+             inputs:
+               secureFile: 'cosign.key'
