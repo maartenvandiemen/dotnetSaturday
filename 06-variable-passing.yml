@@ -5,7 +5,7 @@ stages:
   jobs:
   - job: A
     steps:
-    - script: "##vso[task.setvariable variable=sauce;isOutput=true]crushed tomatoes"
+    - script: "##vso[task.setvariable variable=Sauce;isOutput=true]crushed tomatoes"
       name: ProduceVar
 - stage: Two
   dependsOn: [One]
