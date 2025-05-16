@@ -87,6 +87,9 @@ jobs:
       arguments: '--no-restore --configuration Release --nologo --no-build --output $(Build.ArtifactStagingDirectory)/todoItemsApi'
       modifyOutputPath: false
       zipAfterPublish: true
+      
+  - script: ls -l /home/vsts/work/1/a
+    displayName: 'List contents of /home/vsts/work/1/a'
 
   - script: |
           echo "Installing cosign..."
