@@ -35,7 +35,7 @@ jobs:
       run: |
         echo "Built using the following dynamic versions:" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "- .NET SDK: $DOTNET_VERSION" >> $GITHUB_STEP_SUMMARY
+        echo "- .NET SDK: ${{steps.set-dotnet-version.outputs.DOTNET_VERSION}}" >> $GITHUB_STEP_SUMMARY
       shell: bash
       
     - name: Restore cache
