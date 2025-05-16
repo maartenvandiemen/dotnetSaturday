@@ -1,0 +1,17 @@
+trigger: none 
+
+stages:
+- stage: One
+  jobs:
+  - job: A
+    steps:
+    - script: "vso[task.setvariable variable=sauce;isOutput=true]crushed tomatoes"
+      name: ProduceVar
+- stage: Two
+  dependsOn: [One]
+  jobs:
+  - job: C
+    variables:
+      varFromA: $[stageDependencies.One.A.outputs['ProduceVar.Sauce']]
+    steps:
+    - script: echo $(varFromA)
