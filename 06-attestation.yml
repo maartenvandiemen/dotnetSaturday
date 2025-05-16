@@ -105,4 +105,4 @@ jobs:
 
   - script: |
        cosign sign-blob --key $(cosignPrivateKey.secureFilePath) artifact.txt
-   displayName: 'Sign Artifact with Metadata'
+    displayName: 'Sign Artifact with Metadata'
