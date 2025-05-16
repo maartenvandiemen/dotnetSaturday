@@ -67,20 +67,21 @@ jobs:
     - name: Publish API
       run: dotnet publish ${{github.workspace}}/TodoItems.Api/TodoItems.Api.csproj --configuration Release --no-build --output ${{github.workspace}}/artifacts/TodoItems.Api
 
-    - name: Zip published output (Windows)
-      run: Compress-Archive -Path "${{ github.workspace }}\artifacts\TodoItems.Api\*" -DestinationPath "${{ github.workspace }}\artifacts\TodoItems.Api.zip"
-      shell: pwsh
-      
+    - name: Zip published output
+      run: |
+        cd ${{ github.workspace }}/artifacts
+        zip -r TodoItems.Api.zip TodoItems.Api
+        
     - name: Generate artifact attestation
       uses: actions/attest-build-provenance@v2
       with:
-        subject-path: '${{ github.workspace }}\artifacts\TodoItems.Api.zip'
+        subject-path: '${{ github.workspace }}/artifacts/TodoItems.Api.zip'
 
     - name: Publish API artifact
       uses: actions/upload-artifact@v4
       with:
         name: todoItemsApi
-        path: '${{ github.workspace }}\artifacts\TodoItems.Api.zip'
+        path: '${{ github.workspace }}/artifacts/TodoItems.Api.zip'
         if-no-files-found: error
 
   deploy:
