@@ -1,4 +1,4 @@
-name: 01-Caching
+name: 07-variable-passing
 on: 
   workflow_dispatch:
 
