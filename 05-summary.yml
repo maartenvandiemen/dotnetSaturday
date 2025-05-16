@@ -42,11 +42,6 @@ jobs:
     displayName: Generate list using Markdown
 
   - script: |
-            ls -l
-            cat dynamic-versions.md
-    displayName: Show file before attaching
-
-  - script: |
       echo "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Versions used;]$(Build.SourcesDirectory)/dynamic-versions.md"
     displayName: Attach Markdown to Build Summary
 
