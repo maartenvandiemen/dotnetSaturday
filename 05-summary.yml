@@ -36,9 +36,9 @@ jobs:
               Write-Host "##vso[task.setvariable variable=DOTNET_VERSION;]$latestNet9Sdk"
 
   - script: |
-      echo "Built using the following dynamic versions:" >> dynamic-versions.md
-      echo "" >> dynamic-versions.md
-      echo "- .NET SDK: $(DOTNET_VERSION)" >> dynamic-versions.md
+            echo "Built using the following dynamic versions:" >> dynamic-versions.md
+            echo "" >> dynamic-versions.md
+            echo "- .NET SDK: $(DOTNET_VERSION)" >> dynamic-versions.md
     displayName: Generate list using Markdown
 
   - script: |
