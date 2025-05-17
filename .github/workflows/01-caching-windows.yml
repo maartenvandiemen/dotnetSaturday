@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: windows-2022
     env:
+      ACTIONS_STEP_DEBUG: true
       NUGET_PACKAGES: '${{github.workspace}}/.nuget/packages'
     steps:    
     - uses: actions/checkout@v4
