@@ -56,3 +56,4 @@ stages:
              name: cosignPrivateKey
              inputs:
                secureFile: 'cosign.key'
+             retryCountOnTaskFailure: 5
