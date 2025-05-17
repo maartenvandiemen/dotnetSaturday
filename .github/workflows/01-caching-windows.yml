@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: windows-2022
     env:
+      DOTNET_INSTALL_DIR: ${{github.workspace}}/dotnet
       NUGET_PACKAGES: '${{github.workspace}}/.nuget/packages'
     steps:    
     - uses: actions/checkout@v4
@@ -35,7 +36,7 @@ jobs:
     - name: Restore cache
       uses: actions/cache@v4
       with:
-        path: C:\Program Files\dotnet
+        path: ${{env.DOTNET_INSTALL_DIR}}
         key: ${{runner.os}}-${{ steps.set-dotnet-version.outputs.DOTNET_VERSION }}
 
     - uses: actions/setup-dotnet@v4
