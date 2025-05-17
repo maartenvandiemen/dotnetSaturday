@@ -36,7 +36,7 @@ jobs:
     - name: Restore cache
       uses: actions/cache@v4
       with:
-        path: C:\hostedtoolcache\windows\dotnet
+        path: C:\Program Files\dotnet
         key: ${{runner.os}}-${{ steps.set-dotnet-version.outputs.DOTNET_VERSION }}
 
     - uses: actions/setup-dotnet@v4
