@@ -45,12 +45,6 @@ jobs:
       echo "##vso[task.addattachment type=Distributedtask.Core.Summary;name=Versions used;]$(Build.SourcesDirectory)/dynamic-versions.md"
     displayName: Attach Markdown to Build Summary
 
-  - task: Cache@2
-    displayName: 'Restore cache for Dotnet'
-    inputs:
-      key: 'nuget | "$(Agent.OS)" | "$(DOTNET_VERSION)"'
-      path: '$(Agent.ToolsDirectory)/dotnet'
-
   - task: UseDotNet@2
     inputs:
       packageType: 'sdk'
